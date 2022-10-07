@@ -1,0 +1,12 @@
+*******************
+1. Measure 'Scaled Sales'
+Scaled Sales = if(
+                    HASONEVALUE(Scale[ShowValueAs]),
+                    DIVIDE(SUM(Sales[Sales]),SELECTEDVALUE(Scale[DivideBy])),
+                    SUM(Sales[Sales])
+)
+
+*******************
+2. Measure 'Display Unit'
+Display Unit = "Scaled Sales Unit: " & SELECTEDVALUE(Scale[ShowValueAs]," Real
+Value")

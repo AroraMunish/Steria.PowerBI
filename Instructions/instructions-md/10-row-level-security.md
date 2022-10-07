@@ -42,11 +42,19 @@ In this task you will setup the environment for the lab.
 
 	![Picture 5](Linked_image_Files/04-configure-data-model-in-power-bi-desktop-advanced_image4.png)
 
-1. In the **Open** window, navigate to the **C:\PowerBI\Labs\10-row-level-security\Starter** folder.
+8. In the **Open** window, 
+   
+   **a. For connecting to Local Database**
+   
+   	Navigate to **C:\PowerBI\Labs\10-row-level-security\Starter** folder.
 
-1. Select the **Sales Analysis** file.
+	**b. For connecting to Azure Database**
 
-1. Click **Open**.
+     Navigate to **C:\PowerBI\LabsWithDBInAzure\10-row-level-security\Starter** folder.
+
+9. Select the **Sales Analysis** file.
+
+10. Click **Open**.
 
 	![Picture 4](Linked_image_Files/04-configure-data-model-in-power-bi-desktop-advanced_image5.png)
 

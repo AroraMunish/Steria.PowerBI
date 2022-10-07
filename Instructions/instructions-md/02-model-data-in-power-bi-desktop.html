@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>02-model-data-in-power-bi-desktop.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="lab-02--model-data-in-power-bi-desktop"><strong>Lab 02- Model Data in Power BI Desktop</strong></h1>
+<p><strong>The estimated time to complete the lab is 45 minutes</strong></p>
+<p>In this lab you will commence developing the data model. It will involve creating relationships between tables, and then configuring table and column properties to improve the friendliness and usability of the data model. You will also create hierarchies and create quick measures.</p>
+<p>In this lab you learn how to:</p>
+<ul>
+<li>
+<p>Create model relationships</p>
+</li>
+<li>
+<p>Configure table and column properties</p>
+</li>
+<li>
+<p>Create hierarchies</p>
+</li>
+<li>
+<p>Create quick measures</p>
+</li>
+</ul>
+<h3 id="lab-story"><strong>Lab story</strong></h3>
+<p>This lab is one of many in a series of labs that was designed as a complete story from data preparation to publication as reports and dashboards.</p>
+<h2 id="exercise-1-create-model-relationships"><strong>Exercise 1: Create Model Relationships</strong></h2>
+<p>In this exercise you will create model relationships.</p>
+<h3 id="task-1-get-started"><strong>Task 1: Get started</strong></h3>
+<p>In this task you will setup the environment for the lab.</p>
+<p><em>Important: If you are continuing on from the previous lab (and you completed that lab successfully), do not complete this task; instead, continue from the next task.</em></p>
+<ol>
+<li>
+<p>To open the Power BI Desktop, on the taskbar, click the Microsoft Power BI Desktop shortcut.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image1.png" alt="Picture 12"></p>
+</li>
+<li>
+<p>To close the getting started window, at the top-left of the window, click <strong>X</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image2.png" alt="Picture 11"></p>
+</li>
+<li>
+<p>To open the starter Power BI Desktop file, click the <strong>File</strong> ribbon tab to open the backstage view.</p>
+</li>
+<li>
+<p>Select <strong>Open Report</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image3.png" alt="Picture 10"></p>
+</li>
+<li>
+<p>Click <strong>Browse Reports</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image4.png" alt="Picture 8"></p>
+</li>
+<li>
+<p>In the <strong>Open</strong> window, navigate to the <strong>C:\PowerBI\Labs\02-configure-data-model-in-power-bi-desktop\Starter</strong> folder.</p>
+</li>
+<li>
+<p>If you are using database deployed in Azure open this file from LabsWithDBInAzure folder insted i</p>
+</li>
+<li>
+<p>Select the <strong>Sales Analysis</strong> file.</p>
+</li>
+<li>
+<p>Click <strong>Open</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image5.png" alt="Picture 7"></p>
+</li>
+<li>
+<p>Close any informational windows that may open.</p>
+</li>
+<li>
+<p>To create a copy of the file, click the <strong>File</strong> ribbon tab to open the backstage view.</p>
+</li>
+<li>
+<p>Select <strong>Save As</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image6.png" alt="Picture 5"></p>
+</li>
+<li>
+<p>If prompted to apply changes, click <strong>Apply</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image7.png" alt="Picture 15"></p>
+</li>
+<li>
+<p>In the <strong>Save As</strong> window, navigate to the <strong>C:\PowerBI\MySolution</strong> folder,  , and save the file as <strong>02.Sales Analysis.pbix</strong> as Click <strong>Save</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image8.png" alt="Picture 3"></p>
+</li>
+</ol>
+<h3 id="task-2-create-model-relationships"><strong>Task 2: Create model relationships</strong></h3>
+<p>In this task you will create model relationships.</p>
+<ol>
+<li>
+<p>In Power BI Desktop, at the left, click the <strong>Model</strong> view icon.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image9.png" alt="Picture 1"></p>
+</li>
+<li>
+<p>If you do not see all seven tables, scroll horizontally to the right, and then drag and arrange the tables more closely together so they can all be seen at the same time.</p>
+<p><em>Tip: You can also use the zoom control located at the bottom of the window.</em></p>
+<p><em>In Model view, it’s possible to view each table and relationships (connectors between tables). Presently, there are no relationships because in the <strong>Prepare Data in Power BI Desktop</strong> lab, you disabled the data load relationship options.</em></p>
+</li>
+<li>
+<p>To return to Report view, at the left, click the <strong>Report</strong> view icon.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image10.png" alt="Picture 327"></p>
+</li>
+<li>
+<p>To view all table fields, in the <strong>Fields</strong> pane, right-click an empty area, and then select <strong>Expand All</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image11.png" alt="Picture 328"></p>
+</li>
+<li>
+<p>To create a table visual, in the <strong>Fields</strong> pane, from inside the <strong>Product</strong> table, check the <strong>Category</strong> field.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image12.png" alt="Picture 329"></p>
+<p><em>The labs use a shorthand notation to reference a field. It will look like this: <strong>Product | Category</strong>. In this example, <strong>Product</strong> is the table name and <strong>Category</strong> is the field name.</em></p>
+</li>
+<li>
+<p>To add an additional column to the table, in the <strong>Fields</strong> pane, check the <strong>Sales | Sales</strong> field.</p>
+</li>
+<li>
+<p>Notice that the table visual lists four product categories, and that the sales value is the same for each, and the same for the total.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image13.png" alt="Picture 330"></p>
+<p><em>The issue is that the table is based on fields from different tables. The expectation is that each product category displays the sales for that category. However, because there isn’t a model relationship between these tables, the <strong>Sales</strong> table is not filtered. You’ll now add a relationship to propagate filters between the tables.</em></p>
+</li>
+<li>
+<p>On the <strong>Modeling</strong> ribbon tab, from inside the <strong>Relationships</strong> group, click <strong>Manage Relationships</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image14.png" alt="Picture 331"></p>
+</li>
+<li>
+<p>In the <strong>Manage Relationships</strong> window, notice that no relationships are yet defined.</p>
+</li>
+<li>
+<p>To create a relationship, click <strong>New</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image15.png" alt="Picture 332"></p>
+</li>
+<li>
+<p>In the <strong>Create Relationship</strong> window, in the first dropdown list, select the <strong>Product</strong> table.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image16.png" alt="Picture 333"></p>
+</li>
+<li>
+<p>In the second dropdown list (beneath the <strong>Product</strong> table grid), select the <strong>Sales</strong> table.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image17.png" alt="Picture 334"></p>
+</li>
+<li>
+<p>Notice the <strong>ProductKey</strong> columns in each table have been automatically selected.</p>
+<p><em>The columns were selected because they share the same name and data type.</em></p>
+</li>
+<li>
+<p>In the <strong>Cardinality</strong> dropdown list, notice that <strong>One To Many (1:*)</strong> is selected.</p>
+<p><em>The cardinality was automatically detected, because Power BI understands that the <strong>ProductKey</strong> column from the <strong>Product</strong> table contains unique values. One-to-many relationships are the most common cardinality, and all relationship you create in this lab will be this type.</em></p>
+</li>
+<li>
+<p>In the <strong>Cross Filter Direction</strong> dropdown list, notice that <strong>Single</strong> is selected.</p>
+<p>*Single filter direction means that filters propagate from the “one side” to the “many side”. In this case, it means filters applied to the <strong>Product</strong> table will propagate to the <strong>Sales</strong> table, but not in the opposite direction. *</p>
+</li>
+<li>
+<p>Notice that the <strong>Mark This Relationship Active</strong> is checked.</p>
+<p>*Active relationships propagate filters. It’s possible to mark a relationship as inactive so filters don’t propagate. Inactive relationships can exist when there are multiple relationship paths between tables. In this case, model calculations can use special functions to activate them.</p>
+</li>
+<li>
+<p>Click <strong>OK</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image18.png" alt="Picture 335"></p>
+</li>
+<li>
+<p>In the <strong>Manage Relationships</strong> window, notice that the new relationship is listed, and then click <strong>Close</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image19.png" alt="Picture 336"></p>
+</li>
+<li>
+<p>In the report, notice that the table visual updated to display different values for each product category.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image20.png" alt="Picture 337"></p>
+<p><em>Filters applied to the <strong>Product</strong> table now propagate to the <strong>Sales</strong> table.</em></p>
+</li>
+<li>
+<p>Switch to Model view, and then notice there is now a connector between the two tables (it does not matter if the tables are positioned next to each other).</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image21.png" alt="Picture 338"></p>
+</li>
+<li>
+<p>In the diagram, notice that you can interpret the cardinality which is represented by the <strong>1</strong> and ***** indicators.</p>
+<p><em>Filter direction is represented by the arrow head. A solid line represents an active relationship; a dashed line represents an inactive relationship.</em></p>
+</li>
+<li>
+<p>Hover the cursor over the relationship to highlight the related columns.</p>
+<p><em>There’s an easier way to create a relationship. In the model diagram, you can drag and drop columns to create a new relationship.</em></p>
+</li>
+<li>
+<p>To create a new relationship using a different technique, from the <strong>Reseller</strong> table, drag the <strong>ResellerKey</strong> column on to the <strong>ResellerKey</strong> column of the <strong>Sales</strong> table.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image22.png" alt="Picture 339"></p>
+<p><em>Tip: Sometime a column doesn’t want to be dragged. If this situation arises, select a different column, and then select the column you intend to drag again, and then try again. Ensure that you see the new relationship added to the diagram.</em></p>
+</li>
+<li>
+<p>Use the new technique to create the following two model relationships:</p>
+<ul>
+<li>
+<p><strong>Region | SalesTerritoryKey</strong> to <strong>Sales | SalesTerritoryKey</strong></p>
+</li>
+<li>
+<p><strong>Salesperson | EmployeeKey</strong> to <strong>Sales | EmployeeKey</strong></p>
+</li>
+</ul>
+<p>*In this lab the <strong>SalespersonRegion</strong> and <strong>Targets</strong> tables will remain disconnected. There’s a many-to-many relationship between salespeople and regions.</p>
+</li>
+<li>
+<p>In the diagram, arrange the tables so that the <strong>Sales</strong> table is positioned in the center of the diagram, and the related tables are arranged about it. Position the disconnected tables to the side.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image23.png" alt="Picture 340"></p>
+</li>
+<li>
+<p>Save the Power BI Desktop file.</p>
+</li>
+</ol>
+<h2 id="exercise-2-configure-tables"><strong>Exercise 2: Configure Tables</strong></h2>
+<p>In this exercise you will configure each table by creating hierarchies, and hiding, formatting, and categorizing columns.</p>
+<h3 id="task-1-configure-the-product-table"><strong>Task 1: Configure the Product table</strong></h3>
+<p>In this task you will configure the <strong>Product</strong> table.</p>
+<ol>
+<li>
+<p>In Model view, in the <strong>Fields</strong> pane, if necessary, expand the <strong>Product</strong> table to reveal all fields.</p>
+</li>
+<li>
+<p>To create a hierarchy, in the <strong>Fields</strong> pane, right-click the <strong>Category</strong> column, and then select <strong>Create Hierarchy</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image24.png" alt="Picture 341"></p>
+</li>
+<li>
+<p>In the <strong>Properties</strong> pane (to the left of the <strong>Fields</strong> pane), in the <strong>Name</strong> box, replace the text with <strong>Products</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image25.png" alt="Picture 344"></p>
+</li>
+<li>
+<p>To add the second level to the hierarchy, in the <strong>Properties</strong> pane, in the <strong>Hierarchy</strong> dropdown list, select <strong>Subcategory</strong> (you might need to scroll down inside the pane).</p>
+</li>
+<li>
+<p>To add the third level to the hierarchy, in the <strong>Hierarchy</strong> dropdown list, select <strong>Product</strong>.</p>
+</li>
+<li>
+<p>To complete the hierarchy design, click <strong>Apply Level Changes</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image26.png" alt="Picture 343"></p>
+<p><em>Tip: Don’t forget to click <strong>Apply Level Changes</strong>—it’s a common mistake to overlook this step.</em></p>
+</li>
+<li>
+<p>In the <strong>Fields</strong> pane, notice the <strong>Products</strong> hierarchy.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image27.png" alt="Picture 347"></p>
+</li>
+<li>
+<p>To reveal the hierarchy levels, expand the <strong>Products</strong> hierarchy.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image28.png" alt="Picture 346"></p>
+</li>
+<li>
+<p>To organize columns into a display folder, in the <strong>Fields</strong> pane, first select the <strong>Background Color Format</strong> column.</p>
+</li>
+<li>
+<p>While pressing the <strong>Ctrl</strong> key, select the <strong>Font Color Format</strong> column.</p>
+</li>
+<li>
+<p>In the <strong>Properties</strong> pane, in the <strong>Display Folder</strong> box, enter <strong>Formatting</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image29.png" alt="Picture 348"></p>
+</li>
+<li>
+<p>In the <strong>Fields</strong> pane, notice that the two columns are now inside a folder.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image30.png" alt="Picture 349"></p>
+<p><em>Display folders are a great way to declutter tables—especially for tables that comprise many fields.</em></p>
+</li>
+</ol>
+<h3 id="task-2-configure-the-region-table"><strong>Task 2: Configure the Region table</strong></h3>
+<p>In this task you will configure the <strong>Region</strong> table.</p>
+<ol>
+<li>
+<p>In the <strong>Region</strong> table, create a hierarchy named <strong>Regions</strong>, with the following three levels:</p>
+<ul>
+<li>
+<p>Group</p>
+</li>
+<li>
+<p>Country</p>
+</li>
+<li>
+<p>Region</p>
+</li>
+</ul>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image31.png" alt="Picture 350"></p>
+</li>
+<li>
+<p>Select the <strong>Country</strong> column (not the <strong>Country</strong> hierarchy level).</p>
+</li>
+<li>
+<p>In the <strong>Properties</strong> pane, expand the <strong>Advanced</strong> section (at the bottom of the pane), and then in the <strong>Data Category</strong> dropdown list, select <strong>Country/Region</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image32.png" alt="Picture 352"></p>
+<p><em>Data categorization can provide hints to the report designer. In this case, categorizing the column as country or region provides more accurate information to Power BI when it renders a map visualization.</em></p>
+</li>
+</ol>
+<h3 id="task-3-configure-the-reseller-table"><strong>Task 3: Configure the Reseller table</strong></h3>
+<p>In this task you will configure the <strong>Reseller</strong> table.</p>
+<ol>
+<li>
+<p>In the <strong>Reseller</strong> table, create a hierarchy named <strong>Resellers</strong>, with the following two levels:</p>
+<ul>
+<li>
+<p>Business Type</p>
+</li>
+<li>
+<p>Reseller</p>
+</li>
+</ul>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image33.png" alt="Picture 351"></p>
+</li>
+<li>
+<p>Create a second hierarchy named <strong>Geography</strong>, with the following four levels:</p>
+<ul>
+<li>
+<p>Country-Region</p>
+</li>
+<li>
+<p>State-Province</p>
+</li>
+<li>
+<p>City</p>
+</li>
+<li>
+<p>Reseller</p>
+</li>
+</ul>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image34.png" alt="Picture 353"></p>
+</li>
+<li>
+<p>Categorize the following three columns:</p>
+<ul>
+<li>
+<p><strong>Country-Region</strong> as <strong>Country/Region</strong></p>
+</li>
+<li>
+<p><strong>State-Province</strong> as <strong>State or Province</strong></p>
+</li>
+<li>
+<p><strong>City</strong> as <strong>City</strong></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="task-4-configure-the-sales-table"><strong>Task 4: Configure the Sales table</strong></h3>
+<p>In this task you will configure the <strong>Sales</strong> table.</p>
+<ol>
+<li>
+<p>In the <strong>Sales</strong> table, select the <strong>Cost</strong> column.</p>
+</li>
+<li>
+<p>In the <strong>Properties</strong> pane, in the <strong>Description</strong> box, enter: <strong>Based on standard cost</strong></p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image35.png" alt="Picture 358"></p>
+<p><em>Descriptions can be applied to tables, columns, hierarchies, or measures. In the <strong>Fields</strong> pane, description text is revealed in a tooltip when a report author hovers their cursor over the field.</em></p>
+</li>
+<li>
+<p>Select the <strong>Quantity</strong> column.</p>
+</li>
+<li>
+<p>In the <strong>Properties</strong> pane, from inside the <strong>Formatting</strong> section, slide the <strong>Thousands Separator</strong> property to <strong>On</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image36.png" alt="Picture 357"></p>
+</li>
+<li>
+<p>Select the <strong>Unit Price</strong> column.</p>
+</li>
+<li>
+<p>In the <strong>Properties</strong> pane, from inside the <strong>Formatting</strong> section, slide the <strong>Decimal Places</strong> property to <strong>2</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Advanced</strong> group (you may need to scroll down to locate it), in the <strong>Summarize By</strong> dropdown list, select <strong>Average</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image37.png" alt="Picture 354"></p>
+<p><em>By default, numeric columns will summarize by summing values together. This default behavior is not suitable for a column like <strong>Unit Price</strong>, which represents a rate. Setting the default summarization to average will produce a meaningful result.</em></p>
+</li>
+</ol>
+<h3 id="task-5-bulk-update-properties"><strong>Task 5: Bulk update properties</strong></h3>
+<p>In this task you will update multiple columns using single bulk updates. You will use this approach to hide columns, and format column values.</p>
+<ol>
+<li>
+<p>In the <strong>Fields</strong> pane, select the <strong>Product | ProductKey</strong> column.</p>
+</li>
+<li>
+<p>While pressing the <strong>Ctrl</strong> key, select the following 13 columns (spanning multiple tables):</p>
+<ul>
+<li>
+<p>Region | SalesTerritoryKey</p>
+</li>
+<li>
+<p>Reseller | ResellerKey</p>
+</li>
+<li>
+<p>Sales | EmployeeKey</p>
+</li>
+<li>
+<p>Sales | ProductKey</p>
+</li>
+<li>
+<p>Sales | ResellerKey</p>
+</li>
+<li>
+<p>Sales | SalesOrderNumber</p>
+</li>
+<li>
+<p>Sales | SalesTerritoryKey</p>
+</li>
+<li>
+<p>Salesperson | EmployeeID</p>
+</li>
+<li>
+<p>Salesperson | EmployeeKey</p>
+</li>
+<li>
+<p>Salesperson | UPN</p>
+</li>
+<li>
+<p>SalespersonRegion | EmployeeKey</p>
+</li>
+<li>
+<p>SalespersonRegion | SalesTerritoryKey</p>
+</li>
+<li>
+<p>Targets | EmployeeID</p>
+</li>
+</ul>
+</li>
+<li>
+<p>In the <strong>Properties</strong> pane, slide the <strong>Is Hidden</strong> property to <strong>On</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image38.png" alt="Picture 355"></p>
+<p><em>The columns were hidden because they’re either used by relationships or will be used in row-level security configuration or calculation logic.</em></p>
+<p>You’ll use the <strong>SalesOrderNumber</strong> in a calculation in the <strong>Create DAX Calculations in Power BI Desktop, Part 1</strong> lab.*</p>
+</li>
+<li>
+<p>Multi-select the following three columns:</p>
+<ul>
+<li>
+<p>Product | Standard Cost</p>
+</li>
+<li>
+<p>Sales | Cost</p>
+</li>
+<li>
+<p>Sales | Sales</p>
+</li>
+</ul>
+</li>
+<li>
+<p>In the <strong>Properties</strong> pane, from inside the <strong>Formatting</strong> section, set the <strong>Decimal Places</strong> property to <strong>0</strong> (zero).</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image39.png" alt="Picture 356"></p>
+</li>
+</ol>
+<h2 id="exercise-3-review-the-model-interface"><strong>Exercise 3: Review the Model Interface</strong></h2>
+<p>In this exercise you will switch to Report view, and review the model interface.</p>
+<h3 id="task-1-review-the-model-interface"><strong>Task 1: Review the model interface</strong></h3>
+<p>In this task you will switch to Report view, and review the model interface.</p>
+<ol>
+<li>
+<p>Switch to Report view.</p>
+</li>
+<li>
+<p>In the <strong>Fields</strong> pane, notice the following:</p>
+<ul>
+<li>
+<p>Columns, hierarchies and their levels are fields, which can be used to configure report visuals</p>
+</li>
+<li>
+<p>Only fields relevant to report authoring are visible</p>
+</li>
+<li>
+<p>The <strong>SalespersonRegion</strong> table is not visible—because all of its fields are hidden</p>
+</li>
+<li>
+<p>Spatial fields in the <strong>Region</strong> and <strong>Reseller</strong> table are adorned with a spatial icon</p>
+</li>
+<li>
+<p>Fields adorned with the sigma symbol (Ʃ) will summarize, by default</p>
+</li>
+<li>
+<p>A tooltip appears when hovering the cursor over the <strong>Sales | Cost</strong> field</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Expand the <strong>Sales | OrderDate</strong> field, and then notice that it reveals a date hierarchy.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image40.png" alt="Picture 359"></p>
+<p><em>The <strong>Targets | TargetMonth</strong> field delivers a similar hierarchy. These hierarchies were not created by you. They were created automatically. There is a problem, however. The Adventure Works financial year commences on July 1 of each year. But, in these automatically created date hierarchies, the date hierarchy year commences on January 1 of each year.</em></p>
+<p><em>You’ll now turn this automatic behavior off. In the <strong>Create DAX Calculations in Power BI Desktop, Part 1</strong> lab, you’ll use DAX to create a date table, and configure it define the Adventure Works’ calendar.</em></p>
+</li>
+<li>
+<p>To turn off auto/date time, click the <strong>File</strong> ribbon tab to open the backstage view.</p>
+</li>
+<li>
+<p>At the left, select <strong>Options and Settings</strong>, and then select <strong>Options</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image41.png" alt="Picture 360"></p>
+</li>
+<li>
+<p>In the <strong>Options</strong> window, at the left, in the <strong>Current File</strong> group, select <strong>Data Load</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image42.png" alt="Picture 361"></p>
+</li>
+<li>
+<p>In the <strong>Time Intelligence</strong> section, uncheck <strong>Auto Date/Time</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image43.png" alt="Picture 362"></p>
+</li>
+<li>
+<p>Click <strong>OK</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image44.png" alt="Picture 9"></p>
+</li>
+<li>
+<p>In the <strong>Fields</strong> pane, notice that the date hierarchies are no longer available.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image45.png" alt="Picture 363"></p>
+</li>
+</ol>
+<h2 id="exercise-4-create-quick-measures"><strong>Exercise 4: Create Quick Measures</strong></h2>
+<p>In this exercise you will create two quick measures.</p>
+<h3 id="task-1-create-quick-measures"><strong>Task 1: Create quick measures</strong></h3>
+<p>In this task you will create two quick measures to calculate profit and profit margin.</p>
+<ol>
+<li>
+<p>In the <strong>Fields</strong> pane, right-click the <strong>Sales</strong> table, and then select <strong>New Quick Measure</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image46.png" alt="Picture 366"></p>
+</li>
+<li>
+<p>In the <strong>Quick Measures</strong> window, in the <strong>Calculation</strong> dropdown list, from inside the <strong>Mathematical Operations</strong> group, select <strong>Subtraction</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image47.png" alt="Picture 367"></p>
+</li>
+<li>
+<p>In the <strong>Fields</strong> pane of the <strong>Quick Measures</strong> window, expand the <strong>Sales</strong> table.</p>
+</li>
+<li>
+<p>Drag the <strong>Sales</strong> field into the <strong>Base Value</strong> box.</p>
+</li>
+<li>
+<p>Drag the <strong>Cost</strong> field into the <strong>Value to Subtract</strong> box.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image48.png" alt="Picture 368"></p>
+</li>
+<li>
+<p>Click <strong>OK</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image49.png" alt="Picture 369"></p>
+<p><em>A quick measure creates the calculation formula for you. They’re easy and fast to create for simple and common calculations. You’ll create measures without using this tool in the <strong>Create DAX Calculations in Power BI Desktop, Part 1</strong> lab.</em></p>
+</li>
+<li>
+<p>In the <strong>Fields</strong> pane, inside the <strong>Sales</strong> table, notice that new measure.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image50.png" alt="Picture 370"></p>
+<p><em>Measures are adorned with the calculator icon.</em></p>
+</li>
+<li>
+<p>To rename the measure, right-click it, and then select <strong>Rename</strong>.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image51.png" alt="Picture 371"></p>
+<p><em>Tip: To rename a field, you can also double-click it, or select it and press <strong>F2</strong>.</em></p>
+</li>
+<li>
+<p>Rename the measure to <strong>Profit</strong>, and then press <strong>Enter</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Sales</strong> table, add a second quick measure, based on the following requirements:</p>
+<ul>
+<li>
+<p>Use the <strong>Division</strong> mathematical operation</p>
+</li>
+<li>
+<p>Set the <strong>Numerator</strong> to the <strong>Sales | Profit</strong> field</p>
+</li>
+<li>
+<p>Set the <strong>Denominator</strong> to <strong>Sales | Sales</strong> field</p>
+</li>
+<li>
+<p>Rename the measure as <strong>Profit Margin</strong></p>
+</li>
+</ul>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image52.png" alt="Picture 372"></p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image53.png" alt="Picture 373"></p>
+</li>
+<li>
+<p>Ensure the <strong>Profit Margin</strong> measure is selected, and then on the <strong>Measure Tools</strong> contextual ribbon, set the format to <strong>Percentage</strong>, with two decimal places.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image54.png" alt="Picture 374"></p>
+</li>
+<li>
+<p>To test the two measures, first select the table visual on the report page.</p>
+</li>
+<li>
+<p>In the <strong>Fields</strong> pane, check the two measures.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image55.png" alt="Picture 375"></p>
+</li>
+<li>
+<p>Click and drag the right guide to widen the table visual.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image56.png" alt="Picture 376"></p>
+</li>
+<li>
+<p>Verify that the measures produce reasonable results that are correctly formatted.</p>
+<p><img src="Linked_image_Files/03-configure-data-model-in-power-bi-desktop_image57.png" alt="Picture 378"></p>
+</li>
+</ol>
+<h3 id="task-2-finish-up"><strong>Task 2: Finish up</strong></h3>
+<p>In this task you will complete the lab.</p>
+<ol>
+<li>
+<p>To remove the table, select the table (by clicking it), and then press the <strong>Delete</strong> key.</p>
+</li>
+<li>
+<p>Save the Power BI Desktop file.</p>
+</li>
+<li>
+<p>If prompted to apply queries, click <strong>Apply Later</strong>.</p>
+</li>
+<li>
+<p>If you intend to start the next lab, leave Power BI Desktop open.</p>
+</li>
+</ol>
+
+</body>
+</html>

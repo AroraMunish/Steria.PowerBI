@@ -49,11 +49,19 @@ In this task you will setup the environment for the lab.
 
     ![Picture 11](Linked_image_Files/02-load-data-with-power-query-in-power-bi-desktop_image4.png)
 
-1. In the **Open** window, navigate to the **C:\PowerBI\Labs\01-load-data-with-power-query-in-power-bi-desktop\Starter** folder.
+1. In the **Open** window, 
+   
+   **a. For connecting to Local Database**
+   
+   	Navigate to **C:\PowerBI\Labs\01-load-data-with-power-query-in-power-bi-desktop\Starter** folder.
+
+	**b. For connecting to Azure Database**
+
+     Navigate to **C:\PowerBI\LabsWithDBInAzure\01-load-data-with-power-query-in-power-bi-desktop\Starter** folder.
 
 1. Select the **Sales Analysis** file.
 
-1. Click **Open**.
+2. Click **Open**.
 
 	![Picture 12](Linked_image_Files/02-load-data-with-power-query-in-power-bi-desktop_image5.png)
 

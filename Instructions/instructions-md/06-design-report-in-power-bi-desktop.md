@@ -113,9 +113,20 @@ In this task you will setup the environment for the lab by opening the starter r
 
 	![Picture 30](Linked_image_Files/07-design-report-in-power-bi-desktop_image7.png)
 
-8. In the **Open** window, navigate to the **C:\PowerBI\Labs\06-design-report-in-power-bi-desktop\Starter** folder , and save the file as **06.Sales Analysis.pbix** as Click **Save**.
 
-10. Click **Open**.
+8. In the **Open** window, 
+   
+   **a. For connecting to Local Database**
+   
+   	Navigate to **C:\PowerBI\Labs\06-design-report-in-power-bi-desktop\Starter** folder.
+
+	**b. For connecting to Azure Database**
+
+     Navigate to **C:\PowerBI\LabsWithDBInAzure\06-design-report-in-power-bi-desktop\Starter** folder.
+
+and save the file as **06.Sales Analysis.pbix** as Click **Save**.
+
+1.  Click **Open**.
 
 	![Picture 16](Linked_image_Files/07-design-report-in-power-bi-desktop_image8.png)
 

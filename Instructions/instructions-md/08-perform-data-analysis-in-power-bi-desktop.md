@@ -62,15 +62,10 @@ In this task you will setup the environment for the lab by creating a dataset.
 
 *Important: If you have already published the dataset in the **07-design-report-in-power-bi-desktop** lab, continue from the next task.*
 
-1. In the Microsoft Edge browser window, in the Power BI service, in the **Navigation** pane, at the bottom, click **Get Data**.
-
-	![Picture 8](Linked_image_Files/10-perform-data-analysis-in-power-bi-desktop_image4.png)
-
-2. In the **Files** tile, click **Get**.
-
-	![Picture 10](Linked_image_Files/10-perform-data-analysis-in-power-bi-desktop_image5.png)
-
-3. Click the **Local File** tile.
+1. In the Microsoft Edge browser window, in the Power BI service, **select workspace | New | Upload a file**.
+![Pic1](Linked_image_Files/08_1.UploadFile.png)
+	
+2. Click the **Local File** tile.
 
 	![Picture 11](Linked_image_Files/10-perform-data-analysis-in-power-bi-desktop_image6.png)
 
